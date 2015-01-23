@@ -13,21 +13,33 @@
 #ifndef FT_MALLOC_H
 # define FT_MALLOC_H
 
-# include <libft.h>
+// # include <libft.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/mman.h>
 
-typedef struct		s_reg
+# define TINYSIZE 40
+# define SMALLSIZE 409
+# define TINYMAX 4096
+# define TINYMAX 40960
+
+enum Type
 {
-	t_list			*addr;
-	struct s_reg	*next;
-}					t_reg;
+	TINY = 0,
+	SMALL,
+	LARGE
+}
 
-# define TINY 40
-# define SMALL 409
-# define LARGE 410
-
-void		free(void *ptr);
-void		*malloc(size_t size);
+void		ft_free(void *ptr);
+void		*ft_malloc(size_t size);
 void		*realloc(void *ptr, size_t size);
+void		*book_into_page(char *mem);
+void		*book_it(size_t size);
+int			get_max_type_size(size_t size);
+int			get_size(size_t size);
+char		get_type(size_t size);
+void		*get_page(size_t size);
+void		*get_malloc(void);
 
 void		show_alloc_mem(void);
 

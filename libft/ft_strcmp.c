@@ -1,16 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlehuger <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vlehuger <vlehuger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/01/22 18:08:47 by vlehuger          #+#    #+#             */
-/*   Updated: 2015/01/22 18:08:48 by vlehuger         ###   ########.fr       */
+/*   Created: 2013/11/21 16:11:01 by vlehuger          #+#    #+#             */
+/*   Updated: 2014/01/25 11:43:03 by vlehuger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void		ft_free(void *ptr)
+#include <libft.h>
+
+int		ft_strcmp(const char *s1, const char *s2)
 {
-	
+	int	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] && s2[i])
+	{
+		i++;
+	}
+	return (s1[i] - s2[i]);
 }

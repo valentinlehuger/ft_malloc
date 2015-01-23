@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlehuger <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vlehuger <vlehuger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/01/22 18:08:47 by vlehuger          #+#    #+#             */
-/*   Updated: 2015/01/22 18:08:48 by vlehuger         ###   ########.fr       */
+/*   Created: 2013/11/23 16:36:22 by vlehuger          #+#    #+#             */
+/*   Updated: 2014/01/18 20:01:45 by vlehuger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void		ft_free(void *ptr)
+#include <libft.h>
+
+char			*ft_strncpy(char *dst, const char *src, size_t len)
 {
-	
+	size_t		index;
+
+	index = 0;
+	while (index < len)
+	{
+		dst[index] = src[index];
+		index++;
+	}
+	if (len != index)
+		dst[index] = '\0';
+	return (dst);
 }

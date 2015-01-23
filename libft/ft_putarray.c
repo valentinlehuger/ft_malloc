@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   ft_putarray.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlehuger <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vlehuger <vlehuger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/01/22 18:08:47 by vlehuger          #+#    #+#             */
-/*   Updated: 2015/01/22 18:08:48 by vlehuger         ###   ########.fr       */
+/*   Created: 2014/02/06 13:44:36 by vlehuger          #+#    #+#             */
+/*   Updated: 2014/02/06 13:46:27 by vlehuger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void		ft_free(void *ptr)
+#include <libft.h>
+
+void			ft_putarray(char **array)
 {
-	
+	int			i;
+
+	i = 0;
+	while (array[i])
+	{
+		if (array[i])
+		{
+			write(1, array[i], ft_strlen(array[i]));
+			write(1, "\n", 1);
+		}
+		i++;
+	}
 }
