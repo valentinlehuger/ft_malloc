@@ -16,8 +16,13 @@ DIRSRC = ./srcs/
 DIROBJ = ./obj/
 
 SRC = ft_malloc.c\
-	  malloc_test_max_small.c
+	  ft_free.c\
+	  malloc_test_free.c
 	  # malloc_test_max_tiny.c
+	  # malloc_test_multi_mix.c
+	  # malloc_test_max_large.c
+	  # malloc_test_mix_tiny_small.c
+	  # malloc_test_max_small.c
 	  # malloc_test2.c
 
 OBJ = $(SRC:.c=.o)

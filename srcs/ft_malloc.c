@@ -24,26 +24,56 @@ void		*get_malloc(void)
 	static void			*pages = NULL;
 
 	if (!pages)
-		pages = get_page(TINYSIZE);
+		pages = get_page(TINYSIZE, 1);
 	// printf("return ptr pages at : %p\n", pages);
 	return pages;
 }
 
-void		*get_page(size_t size)
+char		test_rlimit(size_t size)
 {
-	char	*mem;
-	int		*mem2;
-	char	**mem3;
+	char		*mem;
+	char		**ptr_mem;
+	int			total;
+	int			*int_mem;
+	struct rlimit			rlp;
+
+	total = 0;
+	getrlimit(RLIMIT_STACK, &rlp);
+	mem = get_malloc();
+	while (mem != NULL)
+	{
+		ptr_mem = (char **)(mem + 5);
+		int_mem = (int *)(mem + 1);
+		total += *int_mem;
+		mem = *ptr_mem;
+	}
+
+	printf("total = %d\n", total);
+	printf("limit = %d\n", (int)rlp.rlim_cur);
+
+	if (total + get_max_type_size(size) <= (int)rlp.rlim_cur)
+		return (0);
+	return (1);
+}
+
+void		*get_page(size_t size, int init)
+{
+	char					*mem;
+	int						*mem2;
+	char					**mem3;
 
 	printf("Call to get page for %d bytes.\n", get_max_type_size(size));
 
+	if (init == 0 && test_rlimit(size) == 1)
+		return (NULL);
+
 	mem = (char *)mmap(0, get_max_type_size(size),  PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
 
-	ft_bzero(mem, get_size(size));
+	ft_bzero(mem, get_max_type_size(size));
 
 	mem[0] = get_type(size);
 	mem2 = (int *)(mem + 1);
-	mem2[0] = get_size(size);
+	mem2[0] = get_max_type_size(size);
 	mem3 = (char **)(mem + 5);
 	mem3[0] = NULL;
 
@@ -81,7 +111,7 @@ int			get_max_type_size(size_t size)
 	else if (size <= SMALLSIZE)
 		return SMALLMAX;
 	else
-		return size;
+		return size + 17;
 
 }
 
@@ -92,41 +122,33 @@ void		*book_it(size_t size)
 	char	**ptr_mem;
 	void	*ret;
 
-	if (size <= SMALLSIZE)
-	{
+	mem = (char *)get_malloc();
 		// printf("Enter in book it. Size : %zu\n", size);
-		mem = (char *)get_malloc();
-		while (mem != NULL)
-		{
-			// printf("Test (char)(*mem): %i\n", (char)(*mem));
-			if (get_type(size) == *mem)
-			{
-				ret = book_into_page(mem, size);
-				if (ret != NULL)
-					return ret;
-			}
-			ptr_mem = (char **)(mem + 5);
-			// printf("ptr_mem[0](%p) = %p\n", (&(ptr_mem[0])), ptr_mem[0]);
-			if (!*ptr_mem)
-			{
-				printf("ptr_mem[0](%p) = %p\n", (&(ptr_mem[0])), ptr_mem[0]);
-				ptr_mem[0] = get_page(size);
-				printf("ptr_mem[0](%p) from %p to %p\n", (&(ptr_mem[0])), ptr_mem[0], ptr_mem[0] + get_max_type_size(size));
-			}
-
-			// printf("ptr_mem(%p) = %p\n", ptr_mem, *ptr_mem);
-
-			// for (int j = 0; j < 40; j++)
-			// 	printf("%d : %p => %d\n", j, (mem + j), *(mem + j));
-
-			mem = *ptr_mem;
-
-		}
-	}
-
-	// CASE OF LARGE
-	else
+	while (mem != NULL)
 	{
+		// printf("Test (char)(*mem): %i\n", (char)(*mem));
+		if (get_type(size) == *mem)
+		{
+			ret = book_into_page(mem, size);
+			if (ret != NULL)
+				return ret;
+		}
+		ptr_mem = (char **)(mem + 5);
+		// printf("ptr_mem[0](%p) = %p\n", (&(ptr_mem[0])), ptr_mem[0]);
+		if (!*ptr_mem)
+		{
+			printf("ptr_mem[0](%p) = %p\n", (&(ptr_mem[0])), ptr_mem[0]);
+			ptr_mem[0] = get_page(size, 0);
+			printf("ptr_mem[0](%p) from %p to %p\n", (&(ptr_mem[0])), ptr_mem[0], ptr_mem[0] + get_max_type_size(size));
+		}
+
+		// printf("ptr_mem(%p) = %p\n", ptr_mem, *ptr_mem);
+
+		// for (int j = 0; j < 40; j++)
+		// 	printf("%d : %p => %d\n", j, (mem + j), *(mem + j));
+
+		mem = *ptr_mem;
+
 	}
 	return (NULL);
 }
