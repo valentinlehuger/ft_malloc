@@ -7,7 +7,8 @@ int			main(void)
 	int		i;
 
 	str = (char *)ft_malloc(sizeof(char) * 10);
-	printf("%i\n", (int)*(str - 4));
+	printf("str = %p\n", str);
+	// printf("%i\n", (int)*(str - 4));
 	if (str)
 	{
 		i = 0;
@@ -17,14 +18,7 @@ int			main(void)
 			i++;
 		}
 		str[i] = '\0';
-
-		i = 0;
-		while (i < 4080)
-		{
-			printf("%i : %d\n", i, (str[i]));
-			i++;
-		}
-
+		printf("%s\n", str);
 	}
 	else
 	{
@@ -33,21 +27,32 @@ int			main(void)
 
 	printf("\n");
 	str2 = (char *)ft_malloc(sizeof(char) * 10);
+	printf("str2 = %p\n", str2);
 	if (str2)
 	{
 		i = 0;
 		while (i < 9)
 		{
-			str2[i] = 'a' + i;
+			str2[i] = 'c' + i;
 			i++;
 		}
 		str2[i] = '\0';
-		printf("%s\n", str2);
+
+		printf("%p => %s\n", str, str);
+		printf("%p => %s\n", str2, str2);
 	}
 	else
 	{
 		printf("Erreur malloc str2\n");
 	}
+
+
+	// i = 0;
+	// while (i < 100)
+	// {
+	// 	printf("%i : %d\n", i, (str[i]));
+	// 	i++;
+	// }
 
 
 	return (0);

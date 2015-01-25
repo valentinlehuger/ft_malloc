@@ -24,10 +24,8 @@ void		*get_malloc(void)
 	static void			*pages = NULL;
 
 	if (!pages)
-	{
 		pages = get_page(TINYSIZE);
-		ft_bzero(pages, TINYSIZE);
-	}
+	printf("return ptr pages at : %p\n", pages);
 	return pages;
 }
 
@@ -46,6 +44,10 @@ void		*get_page(size_t size)
 	mem2[0] = get_size(size);
 	mem3 = (char **)(mem + 5);
 	mem3[0] = NULL;
+
+	for (int j = 0; j < 40; j++)
+		printf("%d : %p => %d\n", j, (mem + j), *(mem + j));
+
 
 	return mem;
 }
@@ -93,6 +95,7 @@ void		*book_it(size_t size)
 		mem = (char *)get_malloc();
 		while (mem != NULL)
 		{
+			printf("Test (char)(*mem): %i\n", (char)(*mem));
 			if (get_type(size) == (char)(*mem))
 			{
 				ret = book_into_page(mem, size);
@@ -115,17 +118,23 @@ void		*book_into_page(char *mem, size_t size)
 	int		i;
 	int 	*int_mem;
 
-	printf("Enter in book into page. Size : %zu   Mem : %x\n", size, (int)mem);
+	printf("Enter in book into page. Size : %zu   Mem : %p\n", size, mem);
 	i = 0;
+
+	for (int j = 0; j < 40; j++)
+		printf("%d : %p => %d\n", j, (mem + j), *(mem + j));
+
+	mem = mem + 13;
 	while (i < (get_max_type_size(size) - (int)size))
 	{
-		if (i == 0)
+		printf("size = %d\n", (int)(*(mem + i)));
+		if ((int)mem[i] == 0)
 		{
 			int_mem = (int *)mem;
 			int_mem[i/4] = (int)size;
 			return mem + i + 4;
 		}
-		i += (int)(*(mem + i)) + 1;
+		i += (int)(*(mem + i)) + 4;
 	}
 	return (NULL);
 }
