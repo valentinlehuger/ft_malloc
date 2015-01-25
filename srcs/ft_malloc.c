@@ -37,7 +37,7 @@ void		*get_page(size_t size)
 
 	printf("Call to get page for %d bytes.\n", get_max_type_size(size));
 
-	mem = (char *)mmap(0, get_size(size),  PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
+	mem = (char *)mmap(0, get_max_type_size(size),  PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
 
 	ft_bzero(mem, get_size(size));
 
@@ -99,7 +99,7 @@ void		*book_it(size_t size)
 		while (mem != NULL)
 		{
 			// printf("Test (char)(*mem): %i\n", (char)(*mem));
-			if (get_type(size) == (char)(*mem))
+			if (get_type(size) == *mem)
 			{
 				ret = book_into_page(mem, size);
 				if (ret != NULL)
@@ -146,9 +146,8 @@ void		*book_into_page(char *mem, size_t size)
 	{
 		// printf("i = %d ->%p\n", i, mem + i);
 		// printf("size = %d\n", (int)(*(mem + i)));
-		// printf("Here\n");
 		int_mem = (int *)(mem + i);
-		// printf("Here 2 -> *int_mem = %d \n", *(int_mem - 300));
+		// printf("Here 2 -> *int_mem = %d \n", *int_mem);
 		if (*int_mem == 0)
 		{
 			// printf("Here 3\n");
