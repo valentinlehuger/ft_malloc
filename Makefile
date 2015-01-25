@@ -16,7 +16,8 @@ DIRSRC = ./srcs/
 DIROBJ = ./obj/
 
 SRC = ft_malloc.c\
-	  malloc_test.c
+	  malloc_test_max_tiny.c
+	  # malloc_test2.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -49,7 +50,7 @@ clean:
 	@$(MAKE) clean -C ./libft
 
 fclean: clean
-	@$(RM) $(RFLAGS) ft_nm ft_otool
+	@$(RM) $(RFLAGS) ft_malloc
 	@printf 'Fclean %s : [\033[32mDONE\033[0m]\n' '$(NAME)'
 	@$(MAKE) fclean -C ./libft
 
