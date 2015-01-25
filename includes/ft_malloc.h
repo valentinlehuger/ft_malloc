@@ -13,7 +13,7 @@
 #ifndef FT_MALLOC_H
 # define FT_MALLOC_H
 
-// # include <libft.h>
+# include <libft.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/mman.h>
@@ -21,19 +21,19 @@
 # define TINYSIZE 40
 # define SMALLSIZE 409
 # define TINYMAX 4096
-# define TINYMAX 40960
+# define SMALLMAX 40960
 
 enum Type
 {
 	TINY = 0,
 	SMALL,
 	LARGE
-}
+};
 
 void		ft_free(void *ptr);
 void		*ft_malloc(size_t size);
 void		*realloc(void *ptr, size_t size);
-void		*book_into_page(char *mem);
+void		*book_into_page(char *mem, size_t size);
 void		*book_it(size_t size);
 int			get_max_type_size(size_t size);
 int			get_size(size_t size);
