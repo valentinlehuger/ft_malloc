@@ -15,7 +15,7 @@
 void						ft_putaddress(void *ptr)
 {
 	unsigned long long		llu_ptr;
-	static char				hexa_tab[] = "0123456789abcdef";
+	static char				hexa_tab[] = "0123456789ABCDEF";
 	static char				hexa[10];
 	int						i;
 

@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   show_alloc_mem.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vlehuger <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2015/01/26 10:44:13 by vlehuger          #+#    #+#             */
+/*   Updated: 2015/01/26 10:44:16 by vlehuger         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <ft_malloc.h>
 
-void		print_address(void *address)
+int			print_address(void *address)
 {
 	int		*int_mem;
 
@@ -9,44 +20,69 @@ void		print_address(void *address)
 	address = address + 4;
 
 	ft_putaddress(address);
-	ft_putstring(" - ");
+	ft_putstr(" - ");
 	ft_putaddress(address + (*int_mem));
-	ft_putstring(" : ");
+	ft_putstr(" : ");
 	ft_putnbr((*int_mem));
-	ft_pustring(" octets");
+	ft_putstr(" octets\n");
+	return (*int_mem);
 }
 
-void		put_type(char *mem, char type)
+void			put_type(char *type)
+{
+	if (*type == TINY)
+		ft_putstr("TINY : ");
+	else if (*type == SMALL)
+		ft_putstr("SMALL : ");
+	else if (*type == LARGE)
+		ft_putstr("LARGE : ");
+	if (*type == TINY || *type == SMALL || *type == LARGE)
+	{
+		ft_putaddress((void *)type);
+		ft_putchar('\n');
+	}
+}
+
+int			put_page(char *mem)
 {
 	int		i;
-	char	**ptr_mem;
+	int		total;
 	int		*int_mem;
+	int		*int_mem2;
 
-	while (mem)
+	total = 0;
+	put_type(mem);
+	int_mem2 = (int *)(mem + 1);
+	i = 13;
+	while (i < get_max_type_size(*int_mem2))
 	{
-		ptr_mem = (char **)(mem + 5);
-		if (*mem == type)
-		{
-			i = 13;
-			while (i < (get_max_type_size(size) - (int)size))
-			{
-				int_mem = (int *)(mem + i);
-
-				if (*int_mem != 0)
-					ft_putaddress((void *)(mem + i + 4));
-				i += *int_mem;
-			}
-		}
-		mem = *ptr_mem;
+		int_mem = (int *)(mem + i);
+		if (*int_mem == 0)
+			break ;
+		if (*int_mem != 0)
+			total += print_address(mem + i);
+		i += *int_mem;
+		i += 4;
 	}
+	return (total);
 }
 
 void		show_alloc_mem(void)
 {
 	void	*mem;
-	void	*tmp;
+	void	**ptr_mem;
+	int		total;
 
+	total = 0;
 	mem = get_malloc();
-	tmp = mem;
 
+	while (mem)
+	{
+		total += put_page((char*)mem);
+		ptr_mem = (void **)(mem + 5);
+		mem = *ptr_mem;
+	}
+	ft_putstr("Total : ");
+	ft_putnbr(total);
+	ft_putstr(" octets\n");
 }

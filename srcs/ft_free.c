@@ -12,15 +12,63 @@
 
 #include <ft_malloc.h>
 
-void		*free_and_remap()
+void		remap(int *int_mem)
 {
+	int		tmp;
+	int		*next_int_mem;
+	char 	*mem;
+	char	*next_mem;
+
+	mem = (char *)(int_mem + 1);
+	next_int_mem = (int *)(mem + *int_mem);
+	next_mem = (char *)(next_int_mem + 1);
+
+	while (next_int_mem > 0)
+	{
+		tmp = *int_mem;
+		*int_mem = next_int_mem;
+		i = -1;
+		while (i++ < *int_mem)
+		{
+			*(mem + i) = *(next_mem + i);
+			*(next_mem + i) = 0;
+		}
+		next_int_mem = (int *)(mem + tmp + 4 + *int_mem);
+		next_mem = (char *)(next_int_mem + 1);
+		int_mem = (int *)(mem + i);
+		mem = (char *)(int_mem + 1);
+	}
+}
+
+void		*free_and_remap(char *mem)
+{
+	int		*int_mem;
+	int 	*next_block;
+
+	int_mem = (int *)mem;
+	mem += 4;
+	next_block = mem + *int_mem;
+
+	if (*next_block > 0)
+	{
+		ft_bzero(mem, *int_mem);
+		remap(int_mem);
+	}
+
 	// Test if there is another memory block after
+
+
+
 
 	// Test if there is another page after
 
 	return (NULL);
 }
 
+void		free_page()
+{
+
+}
 
 void		ft_free(void *ptr)
 {
@@ -34,27 +82,18 @@ void		ft_free(void *ptr)
 	char_ptr = (char *)ptr;
 	mem = get_malloc();
 
-	printf("Pointer to find : %p\n", char_ptr);
-	for (int k = 0; k < 60; k++)
-	{
-		printf("k => %p => %d\n", mem + k, (int)(*(mem + k)));
-	}
-
 	while (mem != NULL)
 	{
-		printf("next page.\n");
 		ptr_mem = (char **)(mem + 5);
 		int_mem = (int *)(mem + 1);
+
 		i = 13;
-		printf("%d\n", *int_mem);
 		while (i < *int_mem)
 		{
 			int_mem2 = (int *)(mem + i);
-			printf("next memory block. => *int_mem2(%p)=%d\n", int_mem2, *int_mem2);
 			if (mem + i + 4 == char_ptr)
 			{
 				printf("Detect the pointer\n");
-
 
 				ft_bzero(ptr, *int_mem2);
 				*int_mem2 = 0;
