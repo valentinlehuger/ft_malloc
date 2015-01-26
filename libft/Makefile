@@ -42,6 +42,7 @@ SRCS = \
 		ft_memset.c \
 		ft_memmove.c \
 		ft_put_pixel_to_image.c \
+		ft_putaddress.c\
 		ft_putarray.c \
 		ft_putarray_fd.c \
 		ft_putchar.c \

@@ -12,6 +12,16 @@
 
 #include <ft_malloc.h>
 
+void		*free_and_remap()
+{
+	// Test if there is another memory block after
+
+	// Test if there is another page after
+
+	return (NULL);
+}
+
+
 void		ft_free(void *ptr)
 {
 	char	*char_ptr;
@@ -39,13 +49,16 @@ void		ft_free(void *ptr)
 		printf("%d\n", *int_mem);
 		while (i < *int_mem)
 		{
-			printf("next memory block.\n");
 			int_mem2 = (int *)(mem + i);
-			if (mem == char_ptr)
+			printf("next memory block. => *int_mem2(%p)=%d\n", int_mem2, *int_mem2);
+			if (mem + i + 4 == char_ptr)
 			{
 				printf("Detect the pointer\n");
-				ft_bzero(ptr, *int_mem);
+
+
+				ft_bzero(ptr, *int_mem2);
 				*int_mem2 = 0;
+				// Use remap
 				// Use unmap HERE if All the zone is free.
 				return ;
 			}

@@ -69,6 +69,7 @@ void				ft_memdel(void **ap);
 void				*ft_memset(void *b, int c, size_t len);
 void				*ft_memmove(void *s1, const void *s2, size_t n);
 int					ft_nb_int(char *line);
+void				ft_putaddress(void *ptr);
 void				ft_putarray(char **array);
 void				ft_putarray_fd(char **array, int fd);
 void				ft_putchar(char c);

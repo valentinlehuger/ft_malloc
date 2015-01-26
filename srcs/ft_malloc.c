@@ -77,8 +77,8 @@ void		*get_page(size_t size, int init)
 	mem3 = (char **)(mem + 5);
 	mem3[0] = NULL;
 
-	// for (int j = 0; j < 40; j++)
-	// 	printf("%d : %p => %d\n", j, (mem + j), *(mem + j));
+	for (int j = 0; j < 40; j++)
+		printf("%d : %p => %d\n", j, (mem + j), *(mem + j));
 
 
 	return mem;
