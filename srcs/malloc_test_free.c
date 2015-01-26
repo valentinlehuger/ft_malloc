@@ -19,6 +19,7 @@ int			main(void)
 
 	ft_free(str);
 	j = -1;
+
 	while (++j < 40)
 		printf("%d\n", (int)str[j]);
 

@@ -18,6 +18,7 @@ void		remap(int *int_mem)
 	int		*next_int_mem;
 	char 	*mem;
 	char	*next_mem;
+	int		i;
 
 	mem = (char *)(int_mem + 1);
 	next_int_mem = (int *)(mem + *int_mem);
@@ -26,7 +27,7 @@ void		remap(int *int_mem)
 	while (next_int_mem > 0)
 	{
 		tmp = *int_mem;
-		*int_mem = next_int_mem;
+		*int_mem = *next_int_mem;
 		i = -1;
 		while (i++ < *int_mem)
 		{
@@ -40,33 +41,37 @@ void		remap(int *int_mem)
 	}
 }
 
-void		*free_and_remap(char *mem)
+void		free_and_remap(char *mem)
 {
 	int		*int_mem;
 	int 	*next_block;
 
 	int_mem = (int *)mem;
 	mem += 4;
-	next_block = mem + *int_mem;
+	next_block = (int*)(mem + *int_mem);
 
 	if (*next_block > 0)
 	{
 		ft_bzero(mem, *int_mem);
 		remap(int_mem);
 	}
-
-	// Test if there is another memory block after
-
-
-
-
-	// Test if there is another page after
-
-	return (NULL);
 }
 
-void		free_page()
+void		free_page(void *mem, int page_size)
 {
+	int		i;
+	int		*int_mem;
+
+	i = 13;
+	while (i < page_size)
+	{
+		int_mem = (int *)(mem + i + 4);
+
+		free_and_remap(mem + i);
+
+		i += *int_mem;
+		i += 4;
+	}
 
 }
 
@@ -76,8 +81,6 @@ void		ft_free(void *ptr)
 	char	*mem;
 	char	**ptr_mem;
 	int		*int_mem;
-	int 	*int_mem2;
-	int		i;
 
 	char_ptr = (char *)ptr;
 	mem = get_malloc();
@@ -87,23 +90,8 @@ void		ft_free(void *ptr)
 		ptr_mem = (char **)(mem + 5);
 		int_mem = (int *)(mem + 1);
 
-		i = 13;
-		while (i < *int_mem)
-		{
-			int_mem2 = (int *)(mem + i);
-			if (mem + i + 4 == char_ptr)
-			{
-				printf("Detect the pointer\n");
+		free_page(mem, *int_mem);
 
-				ft_bzero(ptr, *int_mem2);
-				*int_mem2 = 0;
-				// Use remap
-				// Use unmap HERE if All the zone is free.
-				return ;
-			}
-			i += *int_mem2;
-			i += 4;
-		}
 		mem = *ptr_mem;
 	}
 
