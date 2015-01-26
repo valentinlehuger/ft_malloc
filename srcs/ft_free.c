@@ -12,87 +12,74 @@
 
 #include <ft_malloc.h>
 
-void		remap(int *int_mem)
+void		*unmap_it(char *mem, int page_size)
 {
-	int		tmp;
-	int		*next_int_mem;
-	char 	*mem;
-	char	*next_mem;
 	int		i;
+	void	**ptr;
+	void	*next;
 
-	mem = (char *)(int_mem + 1);
-	next_int_mem = (int *)(mem + *int_mem);
-	next_mem = (char *)(next_int_mem + 1);
+	ptr = (void **)(mem + 5);
+	next = *ptr;
 
-	while (next_int_mem > 0)
+	if ((void *)mem == get_malloc(0) && next == NULL)
+		get_malloc(1);
+
+	i = 12;
+	while (++i < page_size)
 	{
-		tmp = *int_mem;
-		*int_mem = *next_int_mem;
-		i = -1;
-		while (i++ < *int_mem)
-		{
-			*(mem + i) = *(next_mem + i);
-			*(next_mem + i) = 0;
-		}
-		next_int_mem = (int *)(mem + tmp + 4 + *int_mem);
-		next_mem = (char *)(next_int_mem + 1);
-		int_mem = (int *)(mem + i);
-		mem = (char *)(int_mem + 1);
+		if (mem[i] != 0)
+			return (mem);
 	}
+	munmap((void *)mem, page_size);
+	return (next);
 }
 
-void		free_and_remap(char *mem)
-{
-	int		*int_mem;
-	int 	*next_block;
-
-	int_mem = (int *)mem;
-	mem += 4;
-	next_block = (int*)(mem + *int_mem);
-
-	if (*next_block > 0)
-	{
-		ft_bzero(mem, *int_mem);
-		remap(int_mem);
-	}
-}
-
-void		free_page(void *mem, int page_size)
+void		*free_page(void *mem, int page_size, void *ptr)
 {
 	int		i;
 	int		*int_mem;
 
-	i = 13;
+	i = 17;
 	while (i < page_size)
 	{
-		int_mem = (int *)(mem + i + 4);
-
-		free_and_remap(mem + i);
-
-		i += *int_mem;
-		i += 4;
+		if (mem + i == ptr)
+		{
+			int_mem = (int *)(mem + i - 4);
+			// printf("int_mem (%p) = %d\n", int_mem, *int_mem);
+			ft_bzero(ptr, *int_mem);
+			*int_mem = 0;
+			return unmap_it((char *)mem, page_size);
+		}
+		i++;
 	}
-
+	return mem;
 }
 
 void		ft_free(void *ptr)
 {
 	char	*char_ptr;
 	char	*mem;
+	char	*tmp;
 	char	**ptr_mem;
 	int		*int_mem;
 
 	char_ptr = (char *)ptr;
-	mem = get_malloc();
-
+	mem = get_malloc(0);
+	tmp = NULL;
 	while (mem != NULL)
 	{
-		ptr_mem = (char **)(mem + 5);
 		int_mem = (int *)(mem + 1);
 
-		free_page(mem, *int_mem);
-
-		mem = *ptr_mem;
+		if (tmp != NULL)
+		{
+			ptr_mem = (char **)(tmp + 5);
+			*ptr_mem = (char *)free_page(mem, *int_mem, ptr);
+			ptr_mem = (char **)(mem + 5);
+			mem = *ptr_mem;
+		}
+		else
+			mem = free_page(mem, *int_mem, ptr);
+		tmp = mem;
+		mem = NULL;
 	}
-
 }

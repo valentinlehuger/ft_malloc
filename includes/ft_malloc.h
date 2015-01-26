@@ -25,21 +25,21 @@
 
 enum Type
 {
-	TINY = 0,
+	TINY = 1,
 	SMALL,
 	LARGE
 };
 
 void		ft_free(void *ptr);
 void		*ft_malloc(size_t size);
-void		*realloc(void *ptr, size_t size);
+void		*ft_realloc(void *ptr, size_t size);
 void		*book_into_page(char *mem, size_t size);
 void		*book_it(size_t size);
 int			get_max_type_size(size_t size);
 int			get_size(size_t size);
 char		get_type(size_t size);
 void		*get_page(size_t size, int init);
-void		*get_malloc(void);
+void		*get_malloc(char init);
 
 void		show_alloc_mem(void);
 

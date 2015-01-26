@@ -74,7 +74,7 @@ void		show_alloc_mem(void)
 	int		total;
 
 	total = 0;
-	mem = get_malloc();
+	mem = get_malloc(0);
 
 	while (mem)
 	{

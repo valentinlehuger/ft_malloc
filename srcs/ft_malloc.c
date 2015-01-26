@@ -19,11 +19,13 @@
 // B = size
 // C = pointer on next
 
-void		*get_malloc(void)
+void		*get_malloc(char init)
 {
 	static void			*pages = NULL;
 
-	if (!pages)
+	if (init == 1)
+		pages = NULL;
+	if (!pages && init != 1)
 		pages = get_page(TINYSIZE, 1);
 	// printf("return ptr pages at : %p\n", pages);
 	return pages;
@@ -39,7 +41,7 @@ char		test_rlimit(size_t size)
 
 	total = 0;
 	getrlimit(RLIMIT_STACK, &rlp);
-	mem = get_malloc();
+	mem = get_malloc(0);
 	while (mem != NULL)
 	{
 		ptr_mem = (char **)(mem + 5);
@@ -122,7 +124,7 @@ void		*book_it(size_t size)
 	char	**ptr_mem;
 	void	*ret;
 
-	mem = (char *)get_malloc();
+	mem = (char *)get_malloc(0);
 		// printf("Enter in book it. Size : %zu\n", size);
 	while (mem != NULL)
 	{
