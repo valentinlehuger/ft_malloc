@@ -29,25 +29,46 @@ char		stay_here()
 	return (0);
 }
 
-// void		realloc_page(void *mem, int page_size, void *ptr, size_t size)
-// {
-// 	int		i;
+void		*realloc_less_size(int *ptr, size_t size)
+{
+	char	*mem;
+	int		i;
 
-// 	i = 13;
-// 	while ()
-// 	{
-// 		// IF pointer is found
-// 		{
-// 			// Test to stay here
+	mem = (char *)(ptr + 1);
+	i = (int)size;
+	while (i < *ptr)
+		mem[i++] = 0;
+	*ptr = (int)size;
+	return ((void *)mem);
+}
 
-// 			// Else
-// 				// malloc(size)
-// 				// fill new mem block
-// 				// free old pointer
-// 			i++;
-// 		}
-// 	}
-// }
+
+void		*realloc_page(void *mem, int page_size, void *ptr, size_t size)
+{
+	int		i;
+	int		*ptr_old_size;
+
+	ptr_old_size = (int *)(ptr - 4);
+	if ((int)size < *ptr_old_size)
+		return realloc_less_size(ptr_old_size, size);
+	i = 13;
+	(void)mem;
+	(void)page_size;
+	// while ()
+	// {
+	// 	// IF pointer is found
+	// 	{
+	// 		// Test to stay here
+
+	// 		// Else
+	// 			// malloc(size)
+	// 			// fill new mem block
+	// 			// free old pointer
+	// 		i++;
+	// 	}
+	// }
+	return (NULL);
+}
 
 
 void		*ft_realloc(void *ptr, size_t size)
@@ -55,7 +76,7 @@ void		*ft_realloc(void *ptr, size_t size)
 	char	*char_ptr;
 	char	*mem;
 	char	**ptr_mem;
-	// int		*int_mem;
+	int		*int_mem;
 
 	(void)size;
 
@@ -65,10 +86,12 @@ void		*ft_realloc(void *ptr, size_t size)
 	while (mem != NULL)
 	{
 		ptr_mem = (char **)(mem + 5);
-		// int_mem = (int *)(mem + 1);
-		// realloc_page(mem, *int_mem, ptr, size);
 
-		printf("%d\n", is_pointer_in_page(mem, ptr));
+		if (is_pointer_in_page(mem, ptr) == 1)
+		{
+			int_mem = (int *)(mem + 1);
+			return realloc_page(mem, *int_mem, ptr, size);
+		}
 
 		mem = *ptr_mem;
 	}
