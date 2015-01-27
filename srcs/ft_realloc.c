@@ -23,16 +23,12 @@ char			is_pointer_in_page(void *page, void *ptr)
 		return (0);
 }
 
-// Return a bool 0 if false | 1 if true
-char		stay_here()
-{
-	return (0);
-}
-
 void		*realloc_less_size(int *ptr, size_t size)
 {
 	char	*mem;
 	int		i;
+
+	// printf("Realloc less size\n");
 
 	mem = (char *)(ptr + 1);
 	i = (int)size;
@@ -42,32 +38,56 @@ void		*realloc_less_size(int *ptr, size_t size)
 	return ((void *)mem);
 }
 
+void		*go_elsewhere(void *old_ptr, size_t size, int old_size)
+{
+	void	*new_ptr;
+
+	new_ptr = ft_malloc(size);
+	if (!new_ptr)
+		return (NULL);
+	new_ptr = ft_memcpy(new_ptr, old_ptr, (size_t)old_size);
+	ft_free(old_ptr);
+	return new_ptr;
+}
 
 void		*realloc_page(void *mem, int page_size, void *ptr, size_t size)
 {
 	int		i;
 	int		*ptr_old_size;
+	int		*int_ptr;
 
 	ptr_old_size = (int *)(ptr - 4);
 	if ((int)size < *ptr_old_size)
 		return realloc_less_size(ptr_old_size, size);
-	i = 13;
-	(void)mem;
-	(void)page_size;
-	// while ()
-	// {
-	// 	// IF pointer is found
-	// 	{
-	// 		// Test to stay here
 
-	// 		// Else
-	// 			// malloc(size)
-	// 			// fill new mem block
-	// 			// free old pointer
-	// 		i++;
-	// 	}
-	// }
-	return (NULL);
+	i = *ptr_old_size;
+
+	// printf("ptr = %p and mem = %p\n", ptr, mem);
+	// printf("page_size - (ptr - mem) = %ld\n", page_size - (ptr - mem));
+	// printf("i = %d\n", i);
+
+	while (i < ((int)size) && /*FALSE*/ i + 3 < (page_size - (int)(ptr - mem)) /* UNTIL HERE */ )
+	{
+		int_ptr = (int *)(ptr + i);
+		// printf("%d.\tYOO int_ptr = %p\n", i, int_ptr);
+		if (*int_ptr != 0)
+		{
+			// printf("Enter HERE !\n");
+			return go_elsewhere(ptr, size, *ptr_old_size);
+		}
+		i++;
+	}
+	if (i == (int)size)
+	{
+		// printf("Enter HERE2 !\n");
+		*ptr_old_size = (int)size;
+	}
+	else
+	{
+		// printf("Enter HERE3 !\n");
+		return go_elsewhere(ptr, size, *ptr_old_size);
+	}
+	return ptr;
 }
 
 
