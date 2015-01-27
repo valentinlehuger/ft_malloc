@@ -17,8 +17,10 @@ DIROBJ = ./obj/
 
 SRC = ft_malloc.c\
 	  ft_free.c\
+	  ft_realloc.c\
 	  show_alloc_mem.c\
-	  malloc_test_free_tiny_large_small.c
+	  malloc_test_realloc.c
+	  # malloc_test_free_tiny_large_small.c
 	  # malloc_test_free_large.c
 	  # malloc_test_free_multi_tiny_pages.c
 	  # malloc_test_free_simple.c
