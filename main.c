@@ -1,12 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vlehuger <vlehuger@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2014/04/15 12:18:13 by vlehuger          #+#    #+#             */
+/*   Updated: 2014/04/20 17:15:08 by vlehuger         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <stdio.h>
 #include <ft_malloc.h>
 
-int			main(void)
+void			test()
 {
-	char	*str;
+	size_t			i;
+	char		*str;
 
-	str = (char *)malloc(sizeof(char) * 8);
+	i = 0;
+	str = NULL;
+	while (i < 1000)
+	{
+		str = malloc(i);
+		str = realloc(str, i / 2);
+		i++;
+	}
+	show_alloc_mem();
+}
 
-	free(str);
-
+int				main(void)
+{
+	test();
 	return (0);
 }
