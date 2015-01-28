@@ -12,13 +12,12 @@
 
 #include <ft_malloc.h>
 
-int			print_address(void *address)
+int				print_address(void *address)
 {
-	int		*int_mem;
+	int			*int_mem;
 
 	int_mem = (int *)address;
 	address = address + 4;
-
 	ft_putaddress(address);
 	ft_putstr(" - ");
 	ft_putaddress(address + (*int_mem));
@@ -43,12 +42,12 @@ void			put_type(char *type)
 	}
 }
 
-int			put_page(char *mem)
+int				put_page(char *mem)
 {
-	int		i;
-	int		total;
-	int		*int_mem;
-	int		*int_mem2;
+	int			i;
+	int			total;
+	int			*int_mem;
+	int			*int_mem2;
 
 	total = 0;
 	put_type(mem);
@@ -67,15 +66,14 @@ int			put_page(char *mem)
 	return (total);
 }
 
-void		show_alloc_mem(void)
+void			show_alloc_mem(void)
 {
-	void	*mem;
-	void	**ptr_mem;
-	int		total;
+	void		*mem;
+	void		**ptr_mem;
+	int			total;
 
 	total = 0;
 	mem = get_malloc(0);
-
 	while (mem)
 	{
 		total += put_page((char*)mem);

@@ -32,7 +32,6 @@ enum Type
 void		free(void *ptr);
 void		*malloc(size_t size);
 void		*realloc(void *ptr, size_t size);
-void		*book_into_page(char *mem, size_t size);
 void		*book_it(size_t size);
 int			get_max_type_size(size_t size);
 int			get_size(size_t size);
@@ -49,5 +48,14 @@ void		ft_putaddress(void *ptr);
 int			ft_putchar(char c);
 void		ft_putstr(char const *str);
 void		ft_putnbr(int nb);
+
+/*
+  0   1   2   3   4   5   6   7   8   9   10  11  12 
+| A | B | B | B | B | C | C | C | C | C | C | C | C |
+
+A = type
+B = size
+C = pointer on next
+*/
 
 #endif

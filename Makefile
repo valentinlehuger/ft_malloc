@@ -25,6 +25,9 @@ SRC = ft_malloc.c\
 	  ft_realloc.c\
 	  show_alloc_mem.c\
 
+SRC += get_params.c\
+	   get_malloc.c
+
 SRC += ft_bzero.c\
 	   ft_memcpy.c\
 	   ft_memset.c\
