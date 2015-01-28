@@ -25,6 +25,16 @@ SRC = ft_malloc.c\
 	  ft_realloc.c\
 	  show_alloc_mem.c\
 
+SRC += ft_putendl.c\
+	   ft_putchar.c\
+	   ft_putstr.c\
+	   ft_putnbr.c\
+	   ft_putnbrendl.c\
+	   ft_putaddress.c\
+	   ft_strlen.c\
+	   ft_bzero.c\
+	   ft_memset.c\
+	   ft_memcpy.c
 
 OBJ = $(SRC:.c=.o)
 

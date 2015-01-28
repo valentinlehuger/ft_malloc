@@ -19,7 +19,14 @@ SRC = ft_malloc.c\
 	  ft_free.c\
 	  ft_realloc.c\
 	  show_alloc_mem.c\
-	  malloc_test_realloc_new_page.c
+	  malloc_test_max_tiny.c
+	  # malloc_test_multi_mix.c
+	  # malloc_test_max_large.c
+	  # malloc_test_mix_tiny_small.c
+	  # malloc_test_max_small.c
+	  # malloc_test2.c
+	  # malloc_test_show_alloc_mem.c
+	  # malloc_test_realloc_new_page.c
 	  # malloc_test_realloc_resize.c
 	  # malloc_test_realloc_less_size.c
 	  # malloc_test_free_tiny_large_small.c
@@ -29,13 +36,6 @@ SRC = ft_malloc.c\
 	  # malloc_test_free_tiny_small.c
 	  # malloc_test_free.c
 	  # malloc_test_free_small.c
-	  # malloc_test_max_tiny.c
-	  # malloc_test_multi_mix.c
-	  # malloc_test_max_large.c
-	  # malloc_test_mix_tiny_small.c
-	  # malloc_test_max_small.c
-	  # malloc_test2.c
-	  # malloc_test_show_alloc_mem.c
 
 OBJ = $(SRC:.c=.o)
 
