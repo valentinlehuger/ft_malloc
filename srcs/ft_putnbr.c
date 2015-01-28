@@ -1,39 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlehuger <vlehuger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/19 18:04:46 by vlehuger          #+#    #+#             */
-/*   Updated: 2014/01/22 16:23:02 by vlehuger         ###   ########.fr       */
+/*   Created: 2013/11/19 11:18:34 by vlehuger          #+#    #+#             */
+/*   Updated: 2013/12/16 19:15:50 by vlehuger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include <ft_malloc.h>
+#include <stdio.h>
 
-void					*ft_memmove(void *dst, const void *src, size_t len)
+void	ft_putnbr(int nb)
 {
-	unsigned char		*p_dst;
-	unsigned char		*p_src;
-	unsigned char		*tmp;
-	size_t				k;
-
-	p_dst = (unsigned char*)dst;
-	p_src = (unsigned char*)src;
-	tmp = ft_memalloc(len * sizeof(*tmp));
-	k = 0;
-	while (k < len)
+	if (nb == -2147483648)
 	{
-		tmp[k] = p_src[k];
-		k++;
+		ft_putstr("-2147483648");
+		return ;
 	}
-	k = 0;
-	while (k < len)
+	if (nb < 0)
 	{
-		p_dst[k] = tmp[k];
-		k++;
+		ft_putchar('-');
+		nb = nb * (-1);
 	}
-	free(tmp);
-	return (dst);
+	if (nb < 10)
+	{
+		ft_putchar('0' + nb);
+	}
+	else
+	{
+		ft_putnbr(nb / 10);
+		ft_putchar('0' + (nb % 10));
+	}
 }

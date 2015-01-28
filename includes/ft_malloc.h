@@ -13,7 +13,6 @@
 #ifndef FT_MALLOC_H
 # define FT_MALLOC_H
 
-# include <libft.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/mman.h>
@@ -30,9 +29,9 @@ enum Type
 	LARGE
 };
 
-void		ft_free(void *ptr);
-void		*ft_malloc(size_t size);
-void		*ft_realloc(void *ptr, size_t size);
+void		free(void *ptr);
+void		*malloc(size_t size);
+void		*realloc(void *ptr, size_t size);
 void		*book_into_page(char *mem, size_t size);
 void		*book_it(size_t size);
 int			get_max_type_size(size_t size);
@@ -42,5 +41,13 @@ void		*get_page(size_t size, int init);
 void		*get_malloc(char init);
 
 void		show_alloc_mem(void);
+
+void		ft_bzero(void *s, size_t n);
+void		*ft_memcpy(void *dst, const void *src, size_t len);
+void		*ft_memset(void *b, int c, size_t len);
+void		ft_putaddress(void *ptr);
+int			ft_putchar(char c);
+void		ft_putstr(char const *str);
+void		ft_putnbr(int nb);
 
 #endif

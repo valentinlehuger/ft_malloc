@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strequ.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlehuger <vlehuger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/03/12 11:52:42 by vlehuger          #+#    #+#             */
-/*   Updated: 2014/03/12 11:54:08 by vlehuger         ###   ########.fr       */
+/*   Created: 2014/03/12 11:52:06 by vlehuger          #+#    #+#             */
+/*   Updated: 2014/03/12 11:52:35 by vlehuger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include <string.h>
+#include <ft_malloc.h>
 
-int		ft_strequ(char const *s1, char const *s2)
+void	ft_bzero(void *s, size_t n)
 {
-	int		i;
-
-	if (s1 == NULL || s2 == NULL)
-		return (0);
-	i = 0;
-	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
-		i++;
-	if (s1[i] == '\0' && s2[i] == '\0')
-		return (1);
-	return (0);
+	ft_memset(s, 0, n);
 }

@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlehuger <vlehuger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/27 10:50:59 by vlehuger          #+#    #+#             */
-/*   Updated: 2013/12/29 16:01:34 by vlehuger         ###   ########.fr       */
+/*   Created: 2013/11/19 12:29:29 by vlehuger          #+#    #+#             */
+/*   Updated: 2013/12/07 15:25:29 by vlehuger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include <ft_malloc.h>
 
-void			ft_lstdelone(t_list **alst, void (*del)(void *, size_t))
+void	ft_putstr(char const *str)
 {
-	del((*alst)->content, (*alst)->content_size);
-	free(*alst);
-	*alst = NULL;
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		ft_putchar(str[i]);
+		i++;
+	}
 }

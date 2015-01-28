@@ -139,9 +139,9 @@ void		*book_it(size_t size)
 		// printf("ptr_mem[0](%p) = %p\n", (&(ptr_mem[0])), ptr_mem[0]);
 		if (!*ptr_mem)
 		{
-			printf("ptr_mem[0](%p) = %p\n", (&(ptr_mem[0])), ptr_mem[0]);
+			// printf("ptr_mem[0](%p) = %p\n", (&(ptr_mem[0])), ptr_mem[0]);
 			ptr_mem[0] = get_page(size, 0);
-			printf("ptr_mem[0](%p) from %p to %p\n", (&(ptr_mem[0])), ptr_mem[0], ptr_mem[0] + get_max_type_size(size));
+			// printf("ptr_mem[0](%p) from %p to %p\n", (&(ptr_mem[0])), ptr_mem[0], ptr_mem[0] + get_max_type_size(size));
 		}
 
 		// printf("ptr_mem(%p) = %p\n", ptr_mem, *ptr_mem);
@@ -184,7 +184,7 @@ void		*book_into_page(char *mem, size_t size)
 	return (NULL);
 }
 
-void		*ft_malloc(size_t size)
+void		*malloc(size_t size)
 {
 	char	*mem;
 

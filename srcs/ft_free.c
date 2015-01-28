@@ -31,7 +31,7 @@ void		*unmap_it(char *mem, int page_size)
 
 	if ((void *)mem == get_malloc(0) && next == NULL)
 	{
-		printf("Vous ne passerez... PAS !\n");
+		// printf("Vous ne passerez... PAS !\n");
 		get_malloc(1);
 	}
 	else if ((void *)mem == get_malloc(0))
@@ -62,7 +62,7 @@ void		*free_page(void *mem, int page_size, void *ptr)
 	return mem;
 }
 
-void		ft_free(void *ptr)
+void		free(void *ptr)
 {
 	char	*char_ptr;
 	char	*mem;

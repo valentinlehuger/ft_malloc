@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlehuger <vlehuger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/20 14:26:01 by vlehuger          #+#    #+#             */
-/*   Updated: 2013/12/01 12:27:04 by vlehuger         ###   ########.fr       */
+/*   Created: 2013/11/19 18:04:46 by vlehuger          #+#    #+#             */
+/*   Updated: 2014/01/22 16:23:02 by vlehuger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include <ft_malloc.h>
 
-char				*ft_strcat(char *dst, const char *src)
+void				*ft_memcpy(void *dst, const void *src, size_t len)
 {
-	size_t			index_dst;
-	size_t			index_src;
+	char			*p_dst;
+	char			*p_src;
+	size_t			k;
 
-	index_dst = 0;
-	index_src = 0;
-	while (dst[index_dst] != '\0')
-		index_dst++;
-	while (src[index_src] != '\0')
-		dst[index_dst++] = src[index_src++];
-	dst[index_dst] = '\0';
+	if (!dst || !src || !len)
+		return (dst);
+	p_dst = (char*)dst;
+	p_src = (char*)src;
+	k = 0;
+	while (k < len)
+	{
+		p_dst[k] = p_src[k];
+		k++;
+	}
 	return (dst);
 }

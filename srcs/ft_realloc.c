@@ -28,10 +28,9 @@ void		*realloc_less_size(int *ptr, size_t size)
 	char	*mem;
 	int		i;
 
-	// printf("Realloc less size\n");
-
 	mem = (char *)(ptr + 1);
 	i = (int)size;
+	// can i use ft_bzero ??
 	while (i < *ptr)
 		mem[i++] = 0;
 	*ptr = (int)size;
@@ -42,11 +41,11 @@ void		*go_elsewhere(void *old_ptr, size_t size, int old_size)
 {
 	void	*new_ptr;
 
-	new_ptr = ft_malloc(size);
+	new_ptr = malloc(size);
 	if (!new_ptr)
 		return (NULL);
 	new_ptr = ft_memcpy(new_ptr, old_ptr, (size_t)old_size);
-	ft_free(old_ptr);
+	free(old_ptr);
 	return new_ptr;
 }
 
@@ -62,36 +61,22 @@ void		*realloc_page(void *mem, int page_size, void *ptr, size_t size)
 
 	i = *ptr_old_size;
 
-	// printf("ptr = %p and mem = %p\n", ptr, mem);
-	// printf("page_size - (ptr - mem) = %ld\n", page_size - (ptr - mem));
-	// printf("i = %d\n", i);
-
-	while (i < ((int)size) && /*FALSE*/ i + 3 < (page_size - (int)(ptr - mem)) /* UNTIL HERE */ )
+	while (i < ((int)size) && i + 3 < (page_size - (int)(ptr - mem)))
 	{
 		int_ptr = (int *)(ptr + i);
-		// printf("%d.\tYOO int_ptr = %p\n", i, int_ptr);
 		if (*int_ptr != 0)
-		{
-			// printf("Enter HERE !\n");
 			return go_elsewhere(ptr, size, *ptr_old_size);
-		}
 		i++;
 	}
 	if (i == (int)size)
-	{
-		// printf("Enter HERE2 !\n");
 		*ptr_old_size = (int)size;
-	}
 	else
-	{
-		// printf("Enter HERE3 !\n");
 		return go_elsewhere(ptr, size, *ptr_old_size);
-	}
 	return ptr;
 }
 
 
-void		*ft_realloc(void *ptr, size_t size)
+void		*realloc(void *ptr, size_t size)
 {
 	char	*char_ptr;
 	char	*mem;
