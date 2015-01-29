@@ -13,14 +13,13 @@
 #ifndef FT_MALLOC_H
 # define FT_MALLOC_H
 
-# include <stdio.h>
 # include <stdlib.h>
 # include <sys/mman.h>
 
-# define TINYSIZE 40
-# define SMALLSIZE 409
-# define TINYMAX 4096
-# define SMALLMAX 40960
+# define TINYSIZE 992
+# define SMALLSIZE 7936
+# define TINYMAX 2048000
+# define SMALLMAX 16384000
 
 enum Type
 {

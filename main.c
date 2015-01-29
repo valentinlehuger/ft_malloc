@@ -22,8 +22,8 @@ void			test()
 	str = NULL;
 	while (i < 1000)
 	{
-		str = malloc(i);
-		str = realloc(str, i / 2);
+		str = malloc(i * 10);
+		str = realloc(str, i * 20);
 		i++;
 	}
 	show_alloc_mem();

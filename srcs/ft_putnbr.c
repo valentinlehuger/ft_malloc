@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <ft_malloc.h>
-#include <stdio.h>
 
 void	ft_putnbr(int nb)
 {
