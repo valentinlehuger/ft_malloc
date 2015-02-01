@@ -36,7 +36,7 @@ int			get_max_type_size(size_t size);
 int			get_size(size_t size);
 char		get_type(size_t size);
 void		*get_page(size_t size, int init);
-void		*get_malloc(char init);
+void		*get_malloc(char init, size_t size);
 
 void		show_alloc_mem(void);
 

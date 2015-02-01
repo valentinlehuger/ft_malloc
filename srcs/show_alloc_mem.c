@@ -73,7 +73,7 @@ void			show_alloc_mem(void)
 	int			total;
 
 	total = 0;
-	mem = get_malloc(0);
+	mem = get_malloc(0, 0);
 	while (mem)
 	{
 		total += put_page((char*)mem);

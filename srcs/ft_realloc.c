@@ -81,7 +81,7 @@ void			*realloc(void *ptr, size_t size)
 	int			*int_mem;
 
 	char_ptr = (char *)ptr;
-	mem = get_malloc(0);
+	mem = get_malloc(0, size);
 	while (mem != NULL)
 	{
 		ptr_mem = (char **)(mem + 5);

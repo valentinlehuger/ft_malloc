@@ -14,14 +14,14 @@
 
 #define FLAGS PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE
 
-void				*get_malloc(char init)
+void				*get_malloc(char init, size_t size)
 {
 	static void		*pages = NULL;
 
 	if (init == 1)
 		pages = NULL;
-	if (!pages && init != 1)
-		pages = get_page(TINYSIZE, 1);
+	if (!pages && init != 1 && size > 0)
+		pages = get_page(size, 1);
 	return (pages);
 }
 
@@ -35,7 +35,7 @@ char				test_rlimit(size_t size)
 
 	total = 0;
 	getrlimit(RLIMIT_STACK, &rlp);
-	mem = get_malloc(0);
+	mem = get_malloc(0, size);
 	while (mem != NULL)
 	{
 		ptr_mem = (char **)(mem + 5);
@@ -92,7 +92,7 @@ void				*book_it(size_t size)
 	char			**ptr_mem;
 	void			*ret;
 
-	mem = (char *)get_malloc(0);
+	mem = (char *)get_malloc(0, size);
 	while (mem != NULL)
 	{
 		if (get_type(size) == *mem)

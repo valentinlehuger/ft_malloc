@@ -26,9 +26,9 @@ void		*unmap_it(char *mem, int page_size)
 		if (mem[i] != 0)
 			return (mem);
 	}
-	if ((void *)mem == get_malloc(0) && next == NULL)
-		get_malloc(1);
-	else if ((void *)mem == get_malloc(0))
+	if ((void *)mem == get_malloc(0, 0) && next == NULL)
+		get_malloc(1, -1);
+	else if ((void *)mem == get_malloc(0, 0))
 		return (next);
 	munmap((void *)mem, page_size);
 	return (next);
@@ -63,7 +63,7 @@ void		free(void *ptr)
 	int		*int_mem;
 
 	char_ptr = (char *)ptr;
-	mem = get_malloc(0);
+	mem = get_malloc(0, 0);
 	tmp = NULL;
 	while (mem != NULL)
 	{
