@@ -34,7 +34,7 @@ char				test_rlimit(size_t size)
 	struct rlimit	rlp;
 
 	total = 0;
-	getrlimit(RLIMIT_STACK, &rlp);
+	getrlimit(RLIMIT_AS, &rlp);
 	mem = get_malloc(0, size);
 	while (mem != NULL)
 	{
@@ -43,7 +43,7 @@ char				test_rlimit(size_t size)
 		total += *int_mem;
 		mem = *ptr_mem;
 	}
-	if (total + get_max_type_size(size) <= (int)rlp.rlim_cur)
+	if ((unsigned long long)(total + get_max_type_size(size)) <= rlp.rlim_cur)
 		return (0);
 	return (1);
 }
